@@ -16,21 +16,21 @@ def check():
     data = dict(request.values)
     app.logger.info(data)
     msg = data.get("Body")
-    msg_hash = hashlib.md5(msg.encode()).digest()
+    msg_hash = hashlib.md5(msg.encode()).hexdigest()
 
     if msg_hash in POSITIVELY_FAKE:
         app.logger.info(f"->FAKE_NEWS_FOUND<- hash={msg_hash} msg={msg}",)
 
         resp = MessagingResponse()
         resp.message(
-            "Oops, this is *positively FAKE*. "
+            "Oops, this is *positively FAKE NEWS*. "
             "Please let the original sender know about this."
         )
     else:
         app.logger.error(f"->ENTRY_NOT_FOUND<- hash={msg_hash} msg={msg}",)
         resp = MessagingResponse()
         resp.message(
-            "Oh no, I was unable to verify this, so I'll have a human examine it. "
+            "Oh no, I was unable to verify this, so I'll have a human take a look. "
             "Please try again in a couple of hours."
         )
         return str(resp)
