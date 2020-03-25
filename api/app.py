@@ -30,7 +30,7 @@ def check():
         app.logger.error(f"->ENTRY_NOT_FOUND<- hash={msg_hash} msg={msg}",)
         resp = MessagingResponse()
         resp.message(
-            "Oh no, I was unable to verify this, so I'll have a human take a look. "
+            "I was unable to verify this, so I'll have a human take a look. "
             "Please try again in a couple of hours."
         )
         return str(resp)
