@@ -2,7 +2,9 @@ import logging
 
 from flask import Flask, request
 from flask_cors import CORS
-from twilio import twiml
+
+from twilio.twiml.messaging_response import MessagingResponse
+
 
 app = Flask(__name__)
 CORS(app)
@@ -13,7 +15,7 @@ def check():
     data = request.get_json()
     logging.info(data)
 
-    resp = twiml.Response()
+    resp = MessagingResponse()
     resp.message("Ahoy! Thanks so much for your message.")
 
     return str(resp)
