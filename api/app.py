@@ -10,8 +10,8 @@ CORS(app)
 
 @app.route("/check", methods=["POST"])
 def check():
-    data = request.get_json()
-    app.logger.info(data)
+    app.logger.info(request.values)
+    app.logger.info(request)
 
     resp = MessagingResponse()
     resp.message("Ahoy! Thanks so much for your message.")
