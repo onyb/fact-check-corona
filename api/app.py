@@ -1,8 +1,11 @@
+import hashlib
 import logging
 
 from flask import Flask, request
 from flask_cors import CORS
 from twilio.twiml.messaging_response import MessagingResponse
+
+from .database import POSITIVELY_FAKE
 
 app = Flask(__name__)
 CORS(app)
@@ -10,13 +13,27 @@ CORS(app)
 
 @app.route("/check", methods=["POST"])
 def check():
-    app.logger.info(request.values)
-    app.logger.info(request)
+    data = dict(request.values)
+    app.logger.info(data)
+    msg = data.get("Body")
+    msg_hash = hashlib.md5(msg.encode()).digest()
 
-    resp = MessagingResponse()
-    resp.message("Ahoy! Thanks so much for your message.")
+    if msg_hash in POSITIVELY_FAKE:
+        app.logger.info(f"->FAKE_NEWS_FOUND<- hash={msg_hash} msg={msg}",)
 
-    return str(resp)
+        resp = MessagingResponse()
+        resp.message(
+            "Oops, this is *positively FAKE*. "
+            "Please let the original sender know about this."
+        )
+    else:
+        app.logger.error(f"->ENTRY_NOT_FOUND<- hash={msg_hash} msg={msg}",)
+        resp = MessagingResponse()
+        resp.message(
+            "Oh no, I was unable to verify this, so I'll have a human examine it. "
+            "Please try again in a couple of hours."
+        )
+        return str(resp)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,1 @@
-POSITIVELY_FAKE = [
-    "",
-]
+POSITIVELY_FAKE = []
