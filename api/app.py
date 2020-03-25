@@ -26,6 +26,7 @@ def check():
             "Oops, this is *positively FAKE NEWS*. "
             "Please let the original sender know about this."
         )
+        return str(resp)
     else:
         app.logger.error(f"->ENTRY_NOT_FOUND<- hash={msg_hash} msg={msg}",)
         resp = MessagingResponse()
