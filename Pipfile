@@ -15,6 +15,7 @@ pudb = "*"
 [packages]
 flask = "*"
 flask-cors = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
@@ -25,4 +26,3 @@ allow_prereleases = true
 [scripts]
 test = "python -m pytest"
 lint = "./lint.sh"
-
